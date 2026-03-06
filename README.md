@@ -1,6 +1,6 @@
 # Tech Account Summary
 
-A client-side environment review questionnaire for Solo.io technical accounts. Runs entirely in the browser — no data is sent to any server or stored in any database.
+A client-side environment review questionnaire. Runs entirely in the browser — no data is sent to any server or stored in any database.
 
 **[View Source](https://github.com/find-arka/tech-account-summary)**
 
