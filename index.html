@@ -782,7 +782,7 @@
       --accent: #2563eb; --accent-light: #eff6ff; --accent-dark: #1d4ed8;
       --code-block-bg: #f1f5f9; --code-block-text: #1e293b;
     }
-    .progress-bar-container, .bottom-bar, .nav-toc, .md-toolbar, .file-upload-zone { display: none !important; }
+    .progress-bar-container, .bottom-bar, .nav-toc, .md-toolbar, .file-upload-zone, .trust-banner, .privacy-panel { display: none !important; }
     .page-layout { display: block; max-width: none; }
     .container { max-width: none; padding: 0; }
     .section { box-shadow: none; border: 1px solid #ddd; page-break-inside: auto; background: white !important; }
@@ -811,6 +811,90 @@
     .md-preview:empty::before { content: 'Not provided'; color: #94a3b8; font-style: italic; }
     .md-preview pre { background: #f1f5f9 !important; color: #1e293b !important; }
   }
+
+  /* ===== TRUST BANNER ===== */
+  .trust-banner {
+    background: var(--teal-light);
+    border: 1px solid var(--teal);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--ink-secondary);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .trust-banner .trust-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .trust-banner a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .trust-banner a:hover { text-decoration: underline; }
+  .trust-toggle {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--font-body);
+    transition: all 0.15s;
+  }
+  .trust-toggle:hover { background: var(--surface-2); color: var(--ink); }
+
+  .privacy-panel {
+    display: none;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .privacy-panel.open { display: block; }
+  .privacy-panel h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.2px;
+  }
+  .privacy-panel h4 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    margin: 16px 0 6px;
+    color: var(--ink);
+  }
+  .privacy-panel p, .privacy-panel li {
+    font-size: 13.5px;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+  }
+  .privacy-panel ul {
+    padding-left: 20px;
+    margin: 4px 0 12px;
+  }
+  .privacy-panel li { margin-bottom: 4px; }
+  .privacy-panel .privacy-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .privacy-panel .privacy-footer a { color: var(--accent); text-decoration: none; }
+  .privacy-panel .privacy-footer a:hover { text-decoration: underline; }
 
   /* ===== ANIMATIONS ===== */
   .section {
@@ -905,6 +989,45 @@
   </div>
 
   <div class="container">
+
+  <!-- Trust & Privacy Banner -->
+  <div class="trust-banner" role="status">
+    <span class="trust-icon">&#128274;</span>
+    <span><strong>100% client-side.</strong> This tool processes all data locally in your browser. No data is sent to any server or stored in any database. Your responses never leave your machine unless you explicitly export them.
+    <a href="https://github.com/find-arka/tech-account-summary" target="_blank" rel="noopener">View source code</a></span>
+    <button class="trust-toggle" onclick="togglePrivacy()" aria-expanded="false" aria-controls="privacyPanel">Privacy details</button>
+  </div>
+
+  <!-- Privacy & Security Details Panel -->
+  <div class="privacy-panel" id="privacyPanel" role="region" aria-label="Privacy and security information">
+    <h3>Privacy &amp; Security Details</h3>
+
+    <h4>Data Flow</h4>
+    <p>This application is a static HTML page with client-side JavaScript, running entirely within your browser sandbox. There is no backend server, no database, and no analytics. All form data is stored in <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:13px;">localStorage</code> on your device and can be cleared at any time by clearing your browser data.</p>
+
+    <h4>What happens with your data</h4>
+    <ul>
+      <li><strong>Auto-save:</strong> Responses are saved to your browser's <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:13px;">localStorage</code> (never transmitted)</li>
+      <li><strong>Save Draft:</strong> Exports a JSON file to your local filesystem</li>
+      <li><strong>Generate Document:</strong> Creates a self-contained HTML file downloaded to your machine</li>
+      <li><strong>Print to PDF:</strong> Uses your browser's native print dialog</li>
+      <li><strong>Uploaded files:</strong> Converted to base64 data URIs and stored in-memory; never uploaded to any server</li>
+    </ul>
+
+    <h4>External Dependencies</h4>
+    <ul>
+      <li><strong>Google Fonts</strong> (fonts.googleapis.com) &mdash; loads DM Sans, Plus Jakarta Sans, and JetBrains Mono typefaces. This is the only external network request. No data is sent to Google; only font files are fetched.</li>
+      <li>No other external libraries, CDNs, or third-party scripts are loaded.</li>
+    </ul>
+
+    <h4>Source Code &amp; Auditing</h4>
+    <p>The complete source code is available for inspection at <a href="https://github.com/find-arka/tech-account-summary" target="_blank" rel="noopener">github.com/find-arka/tech-account-summary</a>. You can verify that there are no <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:13px;">fetch()</code>, <code style="background:var(--surface-2);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:13px;">XMLHttpRequest</code>, or any other network calls that transmit form data.</p>
+
+    <div class="privacy-footer">
+      Maintained by <a href="https://github.com/find-arka" target="_blank" rel="noopener">find-arka</a>. For security questions, please open an issue on the <a href="https://github.com/find-arka/tech-account-summary/issues" target="_blank" rel="noopener">GitHub repository</a>.
+    </div>
+  </div>
+
   <form id="envReviewForm" aria-label="Environment Review Questionnaire" autocomplete="off" onsubmit="return false;">
 
   <!-- ===== SECTION 1: Goals ===== -->
@@ -2428,6 +2551,15 @@ window.addEventListener('scroll', () => {
     a.classList.toggle('active', a.getAttribute('href') === '#' + current);
   });
 }, { passive: true });
+
+// ===== Privacy panel toggle =====
+function togglePrivacy() {
+  const panel = document.getElementById('privacyPanel');
+  const btn = document.querySelector('.trust-toggle');
+  const isOpen = panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  btn.textContent = isOpen ? 'Hide details' : 'Privacy details';
+}
 
 // ===== Semantic HTML wiring for AI agent accessibility =====
 function wireSemanticAttributes() {
