@@ -1,0 +1,26 @@
+{
+  "name": "tech-account-summary",
+  "version": "1.0.0",
+  "description": "A client-side environment review questionnaire. Runs entirely in the browser — no data is sent to any server or stored in any database.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/find-arka/tech-account-summary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/find-arka/tech-account-summary/issues"
+  },
+  "homepage": "https://github.com/find-arka/tech-account-summary#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}

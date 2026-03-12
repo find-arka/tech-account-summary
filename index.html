@@ -2044,6 +2044,12 @@
 </div>
 
 <script>
+// ===== Collapse TOC on mobile viewports =====
+if (window.innerWidth <= 640) {
+  const tocCollapse = document.querySelector('.nav-toc-collapse');
+  if (tocCollapse) tocCollapse.removeAttribute('open');
+}
+
 // ===== Lightweight Markdown Parser =====
 function parseMd(text) {
   if (!text) return '';

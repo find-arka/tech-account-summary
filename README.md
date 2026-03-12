@@ -15,6 +15,15 @@ A client-side environment review questionnaire. Runs entirely in the browser —
 - **Print to PDF** — clean print stylesheet with forced light mode
 - **AI-agent friendly** — JSON-LD schema, semantic HTML, and programmatic APIs (`window.getFormSchema()`, `window.fillForm()`)
 
+## Recent Fixes
+
+- **Storage Quota Protection** — large file uploads (base64) are excluded from localStorage autosave to prevent quota errors
+- **Print-to-PDF** — markdown previews are now hydrated before the print dialog fires
+- **Mobile Navigation** — TOC stays compact on small viewports so form content is immediately visible
+- **Data Loss Prevention** — `beforeunload` flushes unsaved keystrokes without waiting for the debounce timer
+- **State Restoration** — environment table inputs and radio selections restore correctly from saved JSON drafts
+- **Document Generation** — subsection headings no longer lump together in generated output
+
 ## Usage
 
 Open `index.html` in any modern browser. No build step or server required.
@@ -23,6 +32,22 @@ Open `index.html` in any modern browser. No build step or server required.
 2. Use **Save JSON** to persist your progress locally
 3. Use **Generate Document** to create a formatted summary
 4. Print or export to PDF via the browser print dialog
+
+## Development
+
+### Prerequisites
+
+- Node.js (for running tests)
+
+### Running Tests
+
+```bash
+npm install
+npx playwright install --with-deps chromium
+npx playwright test
+```
+
+Tests are Playwright-based E2E specs covering the critical regression scenarios listed above.
 
 ## Privacy & Security
 
