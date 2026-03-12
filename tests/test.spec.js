@@ -4,19 +4,13 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 
 const STORAGE_KEY = 'solo_tech_review_draft';
-const DEFAULT_APP_HTML = '/Users/arka/workspace/tech-account-summary/index.html';
 
 function resolveAppHtml() {
   if (process.env.APP_HTML && fs.existsSync(process.env.APP_HTML)) {
     return process.env.APP_HTML;
   }
 
-  const localIndex = path.resolve(process.cwd(), 'index.html');
-  if (fs.existsSync(localIndex)) {
-    return localIndex;
-  }
-
-  return DEFAULT_APP_HTML;
+  return path.resolve(process.cwd(), 'index.html');
 }
 
 function getAppUrl() {
