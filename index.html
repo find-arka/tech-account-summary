@@ -2424,11 +2424,35 @@ function generateDocument() {
 
     html += `<h2>${num ? num.textContent + '. ' : ''}${header.textContent}</h2>`;
 
-    section.querySelectorAll('.subsection-title').forEach(sub => {
-      html += `<h3>${sub.textContent}</h3>`;
+    // Walk subsections and question-groups in DOM order so that
+    // subsection headings appear right before their questions.
+    const contentNodes = section.querySelectorAll('.subsection, .question-group');
+    const emitted = new Set();
+
+    contentNodes.forEach(node => {
+      // If this question-group lives inside a subsection that we
+      // haven't processed yet, skip it — it will be handled when
+      // the parent subsection is visited.
+      if (node.classList.contains('question-group') && node.closest('.subsection') && !emitted.has(node.closest('.subsection'))) return;
+      // Already handled as part of a subsection
+      if (node.classList.contains('question-group') && emitted.has(node)) return;
+
+      if (node.classList.contains('subsection')) {
+        emitted.add(node);
+        const subTitle = node.querySelector('.subsection-title');
+        if (subTitle) html += `<h3>${subTitle.textContent}</h3>`;
+        node.querySelectorAll('.question-group').forEach(innerQg => {
+          emitted.add(innerQg);
+          renderQuestionGroup(innerQg);
+        });
+        return;
+      }
+
+      // Top-level question-group (not inside a subsection)
+      renderQuestionGroup(node);
     });
 
-    section.querySelectorAll('.question-group').forEach(qg => {
+    function renderQuestionGroup(qg) {
       const label = qg.querySelector('.question-label');
       if (!label) return;
 
@@ -2515,7 +2539,7 @@ function generateDocument() {
       }
 
       html += `</div>`;
-    });
+    }
   });
 
   html += `</body></html>`;
