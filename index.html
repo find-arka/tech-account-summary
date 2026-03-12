@@ -746,6 +746,10 @@
   }
   .save-indicator.saved { color: var(--success); }
 
+  /* ===== NAV TOC COLLAPSE (details/summary) ===== */
+  .nav-toc .nav-toc-collapse summary { display: none; }
+  .nav-toc .nav-toc-desktop-heading { display: block; }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 960px) {
     .page-layout { flex-direction: column; }
@@ -763,7 +767,56 @@
     .container { padding: 20px 0; }
   }
   @media (max-width: 640px) {
-    .nav-toc ul { columns: 1; }
+    .nav-toc .nav-toc-desktop-heading { display: none; }
+    .nav-toc .nav-toc-collapse summary {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 10px 14px;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      list-style: none;
+    }
+    .nav-toc .nav-toc-collapse summary::-webkit-details-marker { display: none; }
+    .nav-toc .nav-toc-collapse summary::after {
+      content: '\25BC';
+      font-size: 10px;
+      color: var(--ink-muted);
+      margin-left: auto;
+      transition: transform 0.2s;
+    }
+    .nav-toc .nav-toc-collapse[open] summary::after { transform: rotate(180deg); }
+    .nav-toc .nav-toc-collapse:not([open]) + .nav-toc ul,
+    .nav-toc .nav-toc-collapse:not([open]) ul { display: none; }
+    .nav-toc .nav-toc-collapse ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px 0 0;
+      columns: unset;
+    }
+    .nav-toc .nav-toc-collapse ul li { margin-bottom: 0; }
+    .nav-toc .nav-toc-collapse ul a {
+      padding: 5px 10px;
+      font-size: 12px;
+      background: var(--surface-2);
+      border-radius: 20px;
+      white-space: nowrap;
+      border-left: none;
+      gap: 5px;
+    }
+    .nav-toc .nav-toc-collapse ul a .section-num {
+      width: 18px;
+      height: 18px;
+      font-size: 9px;
+    }
+    .nav-toc { padding: 12px 0; }
     .checkbox-group.grid { grid-template-columns: 1fr; }
     .header h1 { font-size: 26px; }
     .header { padding: 40px 20px 36px; }
@@ -967,25 +1020,28 @@
 
   <!-- Sidebar Table of Contents -->
   <div class="nav-toc">
-    <h3>Sections</h3>
-    <ul>
-      <li><a href="#s1"><span class="section-num">1</span> Goals &amp; Primary Use Cases</a></li>
-      <li><a href="#s2"><span class="section-num">2</span> Architecture Diagrams</a></li>
-      <li><a href="#s3"><span class="section-num">3</span> Environment Details</a></li>
-      <li><a href="#s4"><span class="section-num">4</span> Networking</a></li>
-      <li><a href="#s5"><span class="section-num">5</span> Ingress Traffic</a></li>
-      <li><a href="#s6"><span class="section-num">6</span> East-West &amp; Egress</a></li>
-      <li><a href="#s7"><span class="section-num">7</span> Service Mesh Config</a></li>
-      <li><a href="#s8"><span class="section-num">8</span> Installation &amp; Deployment</a></li>
-      <li><a href="#s9"><span class="section-num">9</span> Resilience &amp; Failure Handling</a></li>
-      <li><a href="#s10"><span class="section-num">10</span> Observability</a></li>
-      <li><a href="#s11"><span class="section-num">11</span> CI/CD &amp; Operations</a></li>
-      <li><a href="#s12"><span class="section-num">12</span> Security Posture</a></li>
-      <li><a href="#s13"><span class="section-num">13</span> LLM / AI &amp; Agentic Workloads</a></li>
-      <li><a href="#s14"><span class="section-num">14</span> Known Issues</a></li>
-      <li><a href="#s15"><span class="section-num">15</span> Artifacts Upload</a></li>
-      <li><a href="#s16"><span class="section-num">16</span> Support Experience</a></li>
-    </ul>
+    <h3 class="nav-toc-desktop-heading">Sections</h3>
+    <details class="nav-toc-collapse" open>
+      <summary>Sections</summary>
+      <ul>
+        <li><a href="#s1"><span class="section-num">1</span> Goals &amp; Primary Use Cases</a></li>
+        <li><a href="#s2"><span class="section-num">2</span> Architecture Diagrams</a></li>
+        <li><a href="#s3"><span class="section-num">3</span> Environment Details</a></li>
+        <li><a href="#s4"><span class="section-num">4</span> Networking</a></li>
+        <li><a href="#s5"><span class="section-num">5</span> Ingress Traffic</a></li>
+        <li><a href="#s6"><span class="section-num">6</span> East-West &amp; Egress</a></li>
+        <li><a href="#s7"><span class="section-num">7</span> Service Mesh Config</a></li>
+        <li><a href="#s8"><span class="section-num">8</span> Installation &amp; Deployment</a></li>
+        <li><a href="#s9"><span class="section-num">9</span> Resilience &amp; Failure Handling</a></li>
+        <li><a href="#s10"><span class="section-num">10</span> Observability</a></li>
+        <li><a href="#s11"><span class="section-num">11</span> CI/CD &amp; Operations</a></li>
+        <li><a href="#s12"><span class="section-num">12</span> Security Posture</a></li>
+        <li><a href="#s13"><span class="section-num">13</span> LLM / AI &amp; Agentic Workloads</a></li>
+        <li><a href="#s14"><span class="section-num">14</span> Known Issues</a></li>
+        <li><a href="#s15"><span class="section-num">15</span> Artifacts Upload</a></li>
+        <li><a href="#s16"><span class="section-num">16</span> Support Experience</a></li>
+      </ul>
+    </details>
   </div>
 
   <div class="container">
@@ -2109,15 +2165,23 @@ function restoreFormData(data) {
 }
 
 function autoSave() {
+  const ind = document.getElementById('saveIndicator');
   try {
     const data = gatherFormData();
+    // Exclude files from localStorage to avoid QuotaExceededError —
+    // uploaded files are kept in-memory only for the current session.
     delete data.files;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    const ind = document.getElementById('saveIndicator');
     ind.textContent = 'Auto-saved';
     ind.className = 'save-indicator saved';
     setTimeout(() => { ind.textContent = ''; }, 2000);
-  } catch(e) {}
+  } catch(e) {
+    if (e.name === 'QuotaExceededError' || e.code === 22) {
+      ind.textContent = 'Storage full — use Save Draft';
+      ind.className = 'save-indicator';
+      console.warn('localStorage quota exceeded. Use "Save Draft" to export your data.');
+    }
+  }
 }
 
 function saveDraft() {
@@ -2265,9 +2329,21 @@ function insertMarkdown(ta, action) {
 
 // ===== Auto-save on input =====
 let saveTimeout;
+let hasUnsavedChanges = false;
 document.addEventListener('input', () => {
+  hasUnsavedChanges = true;
   clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => { autoSave(); updateProgress(); }, 1000);
+  saveTimeout = setTimeout(() => { autoSave(); hasUnsavedChanges = false; updateProgress(); }, 1000);
+});
+
+// ===== Data loss prevention: flush pending save before tab close =====
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedChanges) {
+    autoSave();
+    hasUnsavedChanges = false;
+    // Show browser's native "unsaved changes" prompt
+    e.preventDefault();
+  }
 });
 
 // ===== Progress tracking =====
@@ -2554,8 +2630,34 @@ function generateDocument() {
 }
 
 function printDocument() {
-  prepareForPrint();
-  setTimeout(() => window.print(), 100);
+  // Populate every md-preview with rendered markdown so content is
+  // visible when print CSS hides the textareas.
+  document.querySelectorAll('textarea[data-field]').forEach(ta => {
+    const wrapper = ta.closest('.md-wrapper');
+    if (!wrapper) return;
+    const preview = wrapper.querySelector('.md-preview');
+    if (preview) {
+      preview.innerHTML = parseMd(ta.value);
+      // Ensure preview is rendered (print CSS shows it via !important,
+      // but force content population regardless of toggle state).
+      preview.style.display = 'block';
+      ta.style.display = 'none';
+    }
+  });
+  setTimeout(() => {
+    window.print();
+    // Restore textarea/preview visibility after printing
+    document.querySelectorAll('textarea[data-field]').forEach(ta => {
+      const wrapper = ta.closest('.md-wrapper');
+      if (!wrapper) return;
+      const preview = wrapper.querySelector('.md-preview');
+      const previewBtn = wrapper.querySelector('[data-action="preview"]');
+      if (preview && previewBtn && !previewBtn.classList.contains('active')) {
+        preview.style.display = 'none';
+        ta.style.display = '';
+      }
+    });
+  }, 100);
 }
 
 // ===== Sticky progress bar shadow + active TOC highlight on scroll =====
@@ -2599,7 +2701,12 @@ function wireSemanticAttributes() {
   // Wire label for/id, name, and aria-describedby on all data-field elements
   document.querySelectorAll('[data-field]').forEach(el => {
     const field = el.dataset.field;
-    el.id = el.id || 'field-' + field;
+    // Radio buttons share a data-field; make IDs unique by appending the value
+    if (el.type === 'radio') {
+      el.id = el.id || 'field-' + field + '-' + (el.value || '').replace(/\s+/g, '_');
+    } else {
+      el.id = el.id || 'field-' + field;
+    }
     el.name = el.name || field;
 
     // Find and associate the closest question-label
